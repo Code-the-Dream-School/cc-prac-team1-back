@@ -1,20 +1,51 @@
-const express = require('express');
+/**
+ * This file creates and configures the Express application,
+ * including setting up middleware, routes, and error handling.
+ */
+
+require("dotenv").config();
+require("express-async-errors");
+
+// Imports and initializes an express application
+const express = require("express");
 const app = express();
-const cors = require('cors')
-const favicon = require('express-favicon');
-const logger = require('morgan');
 
-const mainRouter = require('./routes/mainRouter.js');
+// Security
+const helmet = require("helmet");
+const cors = require("cors");
+const xss = require("xss-clean");
+const rateLimiter = require("express-rate-limit");
 
-// middleware
+app.set("trust proxy", 1);
+app.use(helmet());
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(logger('dev'));
-app.use(express.static('public'))
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(xss());
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  })
+);
 
-// routes
-app.use('/api/v1', mainRouter);
+// Routers
+const petsRouter = require("./src/routes/pet");
 
-module.exports = app;
+// Routes
+app.use("/api/v1/pets", petsRouter);
+
+// Sets up the port number for the Express application to listen on
+const port = process.env.PORT || 5005;
+
+// Starts the Express application by establising a connection to a MongoDB database
+const start = async () => {
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(port, () =>
+      console.log(`Server is listening on port ${port}...`)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
