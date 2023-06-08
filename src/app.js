@@ -29,9 +29,11 @@ app.use(
 
 // Routers
 const petsRouter = require("./src/routes/pet");
+const authRouter = require('./src/routes/auth')
 
 // Routes
 app.use("/api/v1/pets", petsRouter);
+app.use('/api/v1/auth', authRouter)
 
 // Sets up the port number for the Express application to listen on
 const port = process.env.PORT || 5005;
