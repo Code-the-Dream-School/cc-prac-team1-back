@@ -27,9 +27,12 @@ app.use(
   })
 );
 
+//connectDB
+const connectDB = require('./db/connect')
+
 // Routers
-const petsRouter = require("./src/routes/pet");
-const authRouter = require('./src/routes/auth')
+const petsRouter = require("./routes/pet");
+const authRouter = require("./routes/auth");
 
 // Routes
 app.use("/api/v1/pets", petsRouter);
