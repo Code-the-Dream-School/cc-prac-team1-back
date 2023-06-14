@@ -10,6 +10,9 @@ require("express-async-errors");
 const express = require("express");
 const app = express();
 
+// Parses JSON payload into a JavaScript object
+app.use(express.json());
+
 // Security
 const helmet = require("helmet");
 const cors = require("cors");
@@ -28,7 +31,7 @@ app.use(
 );
 
 //connectDB
-const connectDB = require('./db/connect')
+const connectDB = require("./db/connect");
 
 // Routers
 const petsRouter = require("./routes/pet");
@@ -36,7 +39,7 @@ const authRouter = require("./routes/auth");
 
 // Routes
 app.use("/api/v1/pets", petsRouter);
-app.use('/api/v1/auth', authRouter)
+app.use("/api/v1/auth", authRouter);
 
 // Sets up the port number for the Express application to listen on
 const port = process.env.PORT || 5005;
