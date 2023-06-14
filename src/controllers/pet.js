@@ -35,15 +35,15 @@ const getAllPetsByUser = async (req, res) => {
 // Retrieves a single pet from the database that matches the specified petID
 const getPet = async (req, res) => {
   // Extracts the petID from the request parameters (req.params)
-  const { petID } = req.params;
+  const { id } = req.params;
 
   // uses the Pet model's findOne() method with a query to filter the pets based on the _id field matching the specified petID
   const pet = await Pet.findOne({
-    _id: petID,
+    _id: id,
   });
 
   if (!pet) {
-    throw new NotFoundError(`No pet found with ID ${petID}`);
+    throw new NotFoundError(`No pet found with ID ${id}`);
   }
   res.status(StatusCodes.OK).json({ pet });
 };
@@ -77,7 +77,6 @@ const updatePet = async (req, res) => {
       email,
       petDescription,
     },
-    user: { userId },
     params: { id: petID },
   } = req;
 
@@ -100,11 +99,10 @@ const updatePet = async (req, res) => {
   }
 
   // Update the pet using findOneAndUpdate method
-  const pet = await Pet.findOneAndUpdate(
-    { _id: petID, createdBy: userId },
-    req.body,
-    { new: true, runValidators: true }
-  );
+  const pet = await Pet.findOneAndUpdate({ _id: petID }, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
   if (!pet) {
     throw new NotFoundError(`No pet with id ${petID}`);
@@ -116,14 +114,12 @@ const updatePet = async (req, res) => {
 const deletePet = async (req, res) => {
   // Extracts necessary data from the request object
   const {
-    user: { userID },
     params: { id: petID },
   } = req;
 
   // Delete the pet using findOneAndRemove method
   const pet = await Pet.findOneAndRemove({
     _id: petID,
-    createdBy: userID,
   });
 
   if (!pet) {
