@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chai-http": "^4.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
@@ -24,6 +25,7 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
     "nodemon": "^2.0.21"
   }
 }
