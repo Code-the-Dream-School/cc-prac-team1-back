@@ -19,15 +19,12 @@ const getAllPets = async (req, res) => {
 // Retrieves a list of all pets from the database posted by a specified user
 const getAllPetsByUser = async (req, res) => {
   // Extracts the userID from the request parameters (req.params)
-  const { userID } = req.params;
+  const { id } = req.params;
 
-  // uses the Pet model's find() method with a query to filter pets based on the createdBy field (assumed to be the user ID)
-  const pets = await Pet.find({
-    createdBy: userID,
-  });
+  const pets = await Pet.find({ userID: id });
 
   if (!pets) {
-    throw new NotFoundError(`No pets created by user with ID ${userID}`);
+    throw new NotFoundError(`No pets created by user with ID ${id}`);
   }
   res.status(StatusCodes.OK).json({ pets });
 };

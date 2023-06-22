@@ -14,5 +14,6 @@ const {
 router.route("/").post(createPet).get(getAllPets);
 router.route("/:id").get(getPet).delete(deletePet).patch(updatePet);
 router.route("/user/:id").get(getAllPetsByUser);
+
 // Exports router
 module.exports = router;
