@@ -4,7 +4,8 @@
   "description": "Back-End Repo for Team 1 of Chimp/Cockatoo Practicum",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "test": "mocha --timeout 1500"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "chai": "^4.3.7",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.21"
   }
 }
