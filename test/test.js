@@ -76,7 +76,7 @@ describe('tests with auth', () => {
                 done();
             });
     })
-    it("should not create an activity entry without valid input", (done) => {
+    it("should not create an pet entry without valid input", (done) => {
         chai
             .request(app)
             .post("/api/v1/pets")
