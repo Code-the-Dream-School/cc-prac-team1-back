@@ -1,6 +1,6 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
-const { app } = require("/home/jenny/Node-React-Practicum/cc-prac-team1-back/src/app.js");
+const { app } = require("../src/app");
 chai.use(chaiHttp);
 chai.should();
 
