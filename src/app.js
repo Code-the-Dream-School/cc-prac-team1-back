@@ -32,6 +32,7 @@ app.use(
 
 //connectDB
 const connectDB = require("./db/connect");
+const authenticateUser = require('./middleware/authentication');
 
 // Routers
 const petsRouter = require("./routes/pet");
@@ -42,8 +43,9 @@ const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
 // Routes
-app.use("/api/v1/pets", petsRouter);
 app.use("/api/v1/auth", authRouter);
+
+app.use("/api/v1/pets", authenticateUser, petsRouter);
 
 
 
