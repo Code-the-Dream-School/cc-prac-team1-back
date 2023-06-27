@@ -50,10 +50,25 @@ const createPet = async (req, res) => {
   // Extracts the request body (req.body) and assigns it to the body variable.
   const { body } = req;
 
-  // Uses the create() method to create a new pet document in the database based on the provided body
-  const pet = await Pet.create(body);
+  // Check if a similar pet already exists in the database
+  const existingPet = await Pet.findOne({
+    petName: body.petName,
+    animalType: body.animalType,
+    petBreed: body.petBreed,
+    petColor: body.petColor,
+    petGender: body.petGender,
+    petLocation: body.petLocation,
+    petDate: body.petDate,
+  });
 
-  res.status(StatusCodes.CREATED).json(pet);
+  if (existingPet) {
+    // If a similar pet exists, return the existing pet's information to the frontend
+    res.status(StatusCodes.OK).json(existingPet);
+  } else {
+    // If no similar pet exists, create a new pet in the database
+    const pet = await Pet.create(body);
+    res.status(StatusCodes.CREATED).json(pet);
+  }
 };
 
 // Attempts to update a pet in the database using the Pet model and findOneAndUpdate method
