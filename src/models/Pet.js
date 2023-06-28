@@ -25,8 +25,7 @@ const PetSchema = new Schema({
   petSituation: {
     type: String,
     required: [true, "Please specify whether the pet is lost or found"],
-    maxlength: 50,
-    minlength: 3,
+    enum: ["lost", "found"],
   },
   animalType: {
     type: String,
@@ -46,8 +45,7 @@ const PetSchema = new Schema({
   },
   petGender: {
     type: String,
-    maxlength: 50,
-    minlength: 4,
+    enum: ["male", "female"],
   },
   petLocation: {
     type: Number,
