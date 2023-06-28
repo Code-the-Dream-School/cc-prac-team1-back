@@ -13,6 +13,11 @@ const app = express();
 // Parses JSON payload into a JavaScript object
 app.use(express.json());
 
+//api docs
+const swaggerUI = require('swagger-ui-express')
+const YAML = require('yamljs')
+const swaggerDocument = YAML.load('/home/jenny/Node-React-Practicum/cc-prac-team1-back/src/swagger.yaml')
+
 // Security
 const helmet = require("helmet");
 const cors = require("cors");
@@ -30,6 +35,10 @@ app.use(
   })
 );
 
+const authenticateUser = require('./middleware/authentication');
+
+
+
 //connectDB
 const connectDB = require("./db/connect");
 
@@ -41,10 +50,12 @@ const authRouter = require("./routes/auth");
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
-// Routes
-app.use("/api/v1/pets", petsRouter);
-app.use("/api/v1/auth", authRouter);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
+
+// Routes
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/pets", authenticateUser, petsRouter);
 
 
 app.use(notFoundMiddleware);

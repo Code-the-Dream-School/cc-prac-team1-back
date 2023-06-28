@@ -1,0 +1,597 @@
+openapi: 3.0.0
+
+info:
+
+  title: pet api
+
+  contact: {}
+
+  version: '1.0'
+
+servers:
+
+- url: http://localhost:5005/api/v1
+
+  variables: {}
+
+paths:
+
+  /auth/register:
+
+    post:
+
+      tags:
+
+      - Auth
+
+      summary: register
+
+      operationId: register
+
+      parameters: []
+
+      requestBody:
+
+        description: ''
+
+        content:
+
+          application/json:
+
+            schema:
+
+              allOf:
+
+              - $ref: '#/components/schemas/registerrequest'
+
+              - example:
+
+                  email: test@email.com
+
+                  name: jentester
+
+                  phone: 4567891230
+
+                  password: hjtkrdi333
+
+            example:
+
+              email: test@email.com
+
+              name: jentester
+
+              phone: 4567891230
+
+              password: hjtkrdi333
+
+        required: true
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security: []
+
+  /auth/login:
+
+    post:
+
+      tags:
+
+      - Auth
+
+      summary: login
+
+      operationId: login
+
+      parameters: []
+
+      requestBody:
+
+        description: ''
+
+        content:
+
+          application/json:
+
+            schema:
+
+              allOf:
+
+              - $ref: '#/components/schemas/loginrequest'
+
+              - example:
+
+                  email: test@email.com
+
+                  password: hjtkrdi333
+
+            example:
+
+              email: test@email.com
+
+              password: hjtkrdi333
+
+        required: true
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security: []
+
+  /pets:
+
+    get:
+
+      tags:
+
+      - Pets
+
+      summary: get all pets
+
+      operationId: getallpets
+
+      parameters: []
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+    post:
+
+      tags:
+
+      - Pets
+
+      summary: create pet
+
+      operationId: createpet
+
+      parameters: []
+
+      requestBody:
+
+        description: ''
+
+        content:
+
+          application/json:
+
+            schema:
+
+              allOf:
+
+              - $ref: '#/components/schemas/createpetrequest'
+
+              - example:
+
+                  contact.email: new@email.com
+
+                  contact.phone: 456325785
+
+                  contact.name: testing tester
+
+                  petDate: 06/14/2023
+
+                  petLocation: 55117
+
+                  animalType: mouse
+
+                  petSituation: found
+
+                  userID: 6489f2a2ac183c68df633a86
+
+            example:
+
+              contact.email: new@email.com
+
+              contact.phone: 456325785
+
+              contact.name: testing tester
+
+              petDate: 06/14/2023
+
+              petLocation: 55117
+
+              animalType: mouse
+
+              petSituation: found
+
+              userID: 6489f2a2ac183c68df633a86
+
+        required: true
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+  '/pets/{id}:':
+
+    patch:
+
+      tags:
+
+      - Pets
+
+      summary: edit pet
+
+      operationId: editpet
+
+      parameters:
+
+      - name: id
+
+        in: path
+
+        description: ''
+
+        required: true
+
+        style: simple
+
+        schema:
+
+          type: string
+
+      requestBody:
+
+        description: ''
+
+        content:
+
+          application/json:
+
+            schema:
+
+              allOf:
+
+              - $ref: '#/components/schemas/editpetrequest'
+
+              - example:
+
+                  animalType: cat
+
+                  petSituation: ''
+
+            example:
+
+              animalType: cat
+
+              petSituation: ''
+
+        required: true
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+    delete:
+
+      tags:
+
+      - Pets
+
+      summary: delete pet
+
+      operationId: deletepet
+
+      parameters:
+
+      - name: id
+
+        in: path
+
+        description: ''
+
+        required: true
+
+        style: simple
+
+        schema:
+
+          type: string
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+    get:
+
+      tags:
+
+      - Pets
+
+      summary: get all pets by user id
+
+      operationId: getallpetsbyuserid
+
+      parameters:
+
+      - name: id
+
+        in: path
+
+        description: ''
+
+        required: true
+
+        style: simple
+
+        schema:
+
+          type: string
+
+      responses:
+
+        '200':
+
+          description: ''
+
+          headers: {}
+
+      deprecated: false
+
+      security:
+
+      - bearer: []
+
+components:
+
+  schemas:
+
+    registerrequest:
+
+      title: registerrequest
+
+      required:
+
+      - email
+
+      - name
+
+      - phone
+
+      - password
+
+      type: object
+
+      properties:
+
+        email:
+
+          type: string
+
+        name:
+
+          type: string
+
+        phone:
+
+          type: integer
+
+          format: int64
+
+        password:
+
+          type: string
+
+      example:
+
+        email: test@email.com
+
+        name: jentester
+
+        phone: 4567891230
+
+        password: hjtkrdi333
+
+    loginrequest:
+
+      title: loginrequest
+
+      required:
+
+      - email
+
+      - password
+
+      type: object
+
+      properties:
+
+        email:
+
+          type: string
+
+        password:
+
+          type: string
+
+      example:
+
+        email: test@email.com
+
+        password: hjtkrdi333
+
+    createpetrequest:
+
+      title: createpetrequest
+
+      required:
+
+      - contact.email
+
+      - contact.phone
+
+      - contact.name
+
+      - petDate
+
+      - petLocation
+
+      - animalType
+
+      - petSituation
+
+      - userID
+
+      type: object
+
+      properties:
+
+        contact.email:
+
+          type: string
+
+        contact.phone:
+
+          type: integer
+
+          format: int32
+
+        contact.name:
+
+          type: string
+
+        petDate:
+
+          type: string
+
+        petLocation:
+
+          type: integer
+
+          format: int32
+
+        animalType:
+
+          type: string
+
+        petSituation:
+
+          type: string
+
+        userID:
+
+          type: string
+
+      example:
+
+        contact.email: new@email.com
+
+        contact.phone: 456325785
+
+        contact.name: testing tester
+
+        petDate: 06/14/2023
+
+        petLocation: 55117
+
+        animalType: mouse
+
+        petSituation: found
+
+        userID: 6489f2a2ac183c68df633a86
+
+    editpetrequest:
+
+      title: editpetrequest
+
+      required:
+
+      - animalType
+
+      - petSituation
+
+      type: object
+
+      properties:
+
+        animalType:
+
+          type: string
+
+        petSituation:
+
+          type: string
+
+      example:
+
+        animalType: cat
+
+        petSituation: ''
+
+  securitySchemes:
+
+    bearer:
+
+      type: http
+
+      scheme: bearer
+
+security: []
+
+tags:
+
+
+- name: Auth
+
+  description: ''
+
+- name: Pets
+
+  description: ''
+

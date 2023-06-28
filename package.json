@@ -11,9 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
     "chai-http": "^4.4.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.1.4",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "express-favicon": "^2.0.4",
@@ -21,13 +22,17 @@
     "helmet": "^7.0.0",
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.1",
+    "mongoose": "^7.3.1",
     "morgan": "^1.10.0",
-    "xss-clean": "^0.1.4"
+    "swagger-ui": "^4.15.4",
+    "swagger-ui-express": "^4.6.3",
+    "xss-clean": "^0.1.4",
+    "yaml": "^2.3.1",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "chai": "^4.3.7",
     "mocha": "^10.2.0",
-    "nodemon": "^2.0.21"
+    "nodemon": "^1.14.9"
   }
 }
