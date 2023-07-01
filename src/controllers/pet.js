@@ -8,12 +8,52 @@
 const Pet = require("../models/Pet");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
+const { query } = require("express");
 
 // Retrieves a list of all pets from the database
 const getAllPets = async (req, res) => {
-  // Gets all pets from the database using the Pet model's find() method
-  const pets = await Pet.find();
-  res.status(StatusCodes.OK).json(pets);
+  //filter pets 
+  const { petSituation, petGender, petDate, petColor, petName, animalType, petBreed, petLocation } = req.query;
+  const queryObject = {};
+
+  if (petSituation) {
+    queryObject.petSituation = petSituation;
+  }
+
+  if (petGender) {
+    queryObject.petGender = petGender;
+  }
+
+  if (petDate) {
+    queryObject.petDate = petDate;
+  }
+
+  if (petColor) {
+    queryObject.petColor = petColor;
+  }
+
+  if (petName) {
+    queryObject.petName = petName;
+  }
+
+  if (animalType) {
+    queryObject.animalType = animalType;
+  }
+
+  if (petBreed) {
+    queryObject.petBreed = petBreed;
+  }
+
+  if(petLocation) {
+    queryObject.petLocation = petLocation
+  }
+
+  let result = Pet.find(queryObject);
+
+  const pets = await result;
+  res.status(StatusCodes.OK).json({ pets });
+
+
 };
 
 // Retrieves a list of all pets from the database posted by a specified user
