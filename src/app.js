@@ -14,9 +14,12 @@ const app = express();
 app.use(express.json());
 
 //api docs
+var path = require('path');
+var swagger_path =  path.resolve(__dirname,'./swagger.yaml');
+
 const swaggerUI = require('swagger-ui-express')
 const YAML = require('yamljs')
-const swaggerDocument = YAML.load('/home/jenny/Node-React-Practicum/cc-prac-team1-back/src/swagger.yaml')
+const swaggerDocument = YAML.load(swagger_path)
 
 // Security
 const helmet = require("helmet");
@@ -36,7 +39,6 @@ app.use(
 );
 
 const authenticateUser = require('./middleware/authentication');
-
 
 
 //connectDB
