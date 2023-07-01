@@ -38,8 +38,6 @@ app.use(
   })
 );
 
-const authenticateUser = require('./middleware/authentication');
-
 
 //connectDB
 const connectDB = require("./db/connect");
