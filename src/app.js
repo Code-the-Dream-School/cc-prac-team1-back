@@ -43,6 +43,7 @@ const authenticateUser = require('./middleware/authentication');
 
 //connectDB
 const connectDB = require("./db/connect");
+const authenticateUser = require('./middleware/authentication');
 
 // Routers
 const petsRouter = require("./routes/pet");
@@ -58,6 +59,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 // Routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/pets", authenticateUser, petsRouter);
+
 
 
 app.use(notFoundMiddleware);
