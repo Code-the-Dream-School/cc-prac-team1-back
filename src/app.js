@@ -14,12 +14,12 @@ const app = express();
 app.use(express.json());
 
 //api docs
-var path = require('path');
-var swagger_path =  path.resolve(__dirname,'./swagger.yaml');
+var path = require("path");
+var swagger_path = path.resolve(__dirname, "./swagger.yaml");
 
-const swaggerUI = require('swagger-ui-express')
-const YAML = require('yamljs')
-const swaggerDocument = YAML.load(swagger_path)
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load(swagger_path);
 
 // Security
 const helmet = require("helmet");
@@ -38,27 +38,23 @@ app.use(
   })
 );
 
-
 //connectDB
 const connectDB = require("./db/connect");
-const authenticateUser = require('./middleware/authentication');
+const authenticateUser = require("./middleware/authentication");
 
 // Routers
 const petsRouter = require("./routes/pet");
 const authRouter = require("./routes/auth");
 
 // error handler
-const notFoundMiddleware = require('./middleware/not-found');
-const errorHandlerMiddleware = require('./middleware/error-handler');
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
-
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // Routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/pets", authenticateUser, petsRouter);
-
-
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
@@ -80,4 +76,4 @@ const start = async () => {
 
 start();
 
-module.exports = { app }
+module.exports = { app };

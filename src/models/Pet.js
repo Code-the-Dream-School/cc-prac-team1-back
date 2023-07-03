@@ -20,7 +20,6 @@ const PetSchema = new Schema({
   petName: {
     type: String,
     maxlength: 50,
-    minlength: 3,
   },
   petSituation: {
     type: String,
@@ -36,19 +35,17 @@ const PetSchema = new Schema({
   petBreed: {
     type: String,
     maxlength: 50,
-    minlength: 3,
   },
   petColor: {
     type: String,
     maxlength: 50,
-    minlength: 3,
   },
   petGender: {
     type: String,
     enum: ["male", "female"],
   },
   petLocation: {
-    type: Number,
+    type: String,
     required: [true, "Please provide a zipcode"],
     maxlength: 50,
     minlength: 5,
@@ -63,7 +60,7 @@ const PetSchema = new Schema({
   },
 
   // The userID field stores the ID of the associated user document and references the "User" model
-  userID: {
+  createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
@@ -71,17 +68,14 @@ const PetSchema = new Schema({
   contact: {
     name: {
       type: String,
-      required: true,
       trim: true,
     },
     phone: {
       type: String,
-      required: true,
       trim: true,
     },
     email: {
       type: String,
-      required: true,
       trim: true,
     },
   },
@@ -90,7 +84,8 @@ const PetSchema = new Schema({
 // Defines a pre-save middleware function that fetches the associated user's information based on the pet's userID
 PetSchema.pre("save", async function (next) {
   // Queries the "User" model using the findById method to find the user document with the specified ID
-  const user = await mongoose.model("User").findById(this.userID);
+  const user = await mongoose.model("User").findById(this.createdBy.toString());
+  console.log(user);
   if (!user) {
     throw new Error("User not found");
   }
@@ -101,6 +96,8 @@ PetSchema.pre("save", async function (next) {
     phone: user.phone,
     email: user.email,
   };
+
+  console.log(this.contact);
 
   // The "next" function is called to proceed with the the saving process
   next();

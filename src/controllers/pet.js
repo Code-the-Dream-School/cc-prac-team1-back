@@ -12,8 +12,17 @@ const { query } = require("express");
 
 // Retrieves a list of all pets from the database
 const getAllPets = async (req, res) => {
-  //filter pets 
-  const { petSituation, petGender, petDate, petColor, petName, animalType, petBreed, petLocation } = req.query;
+  //filter pets
+  const {
+    petSituation,
+    petGender,
+    petDate,
+    petColor,
+    petName,
+    animalType,
+    petBreed,
+    petLocation,
+  } = req.query;
   const queryObject = {};
 
   if (petSituation) {
@@ -44,16 +53,14 @@ const getAllPets = async (req, res) => {
     queryObject.petBreed = petBreed;
   }
 
-  if(petLocation) {
-    queryObject.petLocation = petLocation
+  if (petLocation) {
+    queryObject.petLocation = petLocation;
   }
 
   let result = Pet.find(queryObject);
 
   const pets = await result;
   res.status(StatusCodes.OK).json({ pets });
-
-
 };
 
 // Retrieves a list of all pets from the database posted by a specified user
@@ -87,9 +94,9 @@ const getPet = async (req, res) => {
 
 // Creates a new pet in the database using the Pet model
 const createPet = async (req, res) => {
-  // Extracts the request body (req.body) and assigns it to the body variable.
-  const { body } = req;
+  console.log(req.body);
 
+  /*
   // Check if a similar pet already exists in the database
   const existingPet = await Pet.findOne({
     petName: body.petName,
@@ -108,6 +115,17 @@ const createPet = async (req, res) => {
     // If no similar pet exists, create a new pet in the database
     const pet = await Pet.create(body);
     res.status(StatusCodes.CREATED).json(pet);
+  }
+  */
+
+  try {
+    req.body.createdBy = req.user.userId;
+    const pet = await Pet.create(req.body);
+    console.log(pet);
+    res.status(StatusCodes.CREATED).json(pet);
+  } catch (error) {
+    res.status(StatusCodes.BAD_REQUEST).json(pet);
+    console.log(error);
   }
 };
 
