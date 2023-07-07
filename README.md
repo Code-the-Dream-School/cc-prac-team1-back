@@ -13,8 +13,10 @@
 ## Description
 Pet Watch is a React-Node application. It enables community members to report lost or found pets and to centralize pet information into one resource. Pet Watch provides an easy way to search the lost and found pet database and to communicate with the user who posted the pet.   
 
-## Demo (screenshots)
+## Demo (screenshot) and API docs
 ![demo](./images/PetWatch.png)
+
+- http://localhost:5005/api-docs/
 
 ## Technology Used
 Pet Watch was created with:
